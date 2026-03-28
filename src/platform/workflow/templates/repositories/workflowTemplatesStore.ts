@@ -485,7 +485,10 @@ export const useWorkflowTemplatesStore = defineStore(
     async function fetchCoreTemplates() {
       if (isCloud) {
         const summaries = await api.listAllHubWorkflows()
-        coreTemplates.value = adaptHubWorkflowsToCategories(summaries)
+        coreTemplates.value = adaptHubWorkflowsToCategories(
+          summaries,
+          st('templateWorkflows.category.All', 'All')
+        )
         // Hub templates use absolute thumbnail URLs — no logo index needed
         // Hub has no i18n variant — skip english templates fetch
 

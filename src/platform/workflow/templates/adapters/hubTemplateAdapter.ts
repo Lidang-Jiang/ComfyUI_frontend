@@ -39,18 +39,32 @@ function getMetadataBoolean(
 }
 
 /**
+ * Derives mediaType and mediaSubtype from the hub thumbnail_type.
+ */
+function mapMediaType(thumbnailType?: 'image' | 'video' | 'image_comparison'): {
+  mediaType: string
+  mediaSubtype: string
+} {
+  if (thumbnailType === 'video') {
+    return { mediaType: 'video', mediaSubtype: 'mp4' }
+  }
+  return { mediaType: 'image', mediaSubtype: 'webp' }
+}
+
+/**
  * Converts a hub workflow summary to a TemplateInfo compatible with
  * the existing template dialog infrastructure.
  */
 export function adaptHubWorkflowToTemplate(
   summary: HubWorkflowSummary
 ): TemplateInfo {
+  const { mediaType, mediaSubtype } = mapMediaType(summary.thumbnail_type)
   return {
     name: summary.share_id,
     title: summary.name,
     description: summary.description ?? '',
-    mediaType: 'image',
-    mediaSubtype: 'webp',
+    mediaType,
+    mediaSubtype,
     thumbnailVariant: mapThumbnailVariant(summary.thumbnail_type),
     tags: summary.tags?.map((t) => t.display_name),
     models: summary.models?.map((m) => m.display_name),
@@ -72,12 +86,13 @@ export function adaptHubWorkflowToTemplate(
  * expected by the store. Returns a single category containing all templates.
  */
 export function adaptHubWorkflowsToCategories(
-  summaries: HubWorkflowSummary[]
+  summaries: HubWorkflowSummary[],
+  title: string = 'All'
 ): WorkflowTemplates[] {
   return [
     {
       moduleName: 'hub',
-      title: 'All',
+      title,
       templates: summaries.map(adaptHubWorkflowToTemplate)
     }
   ]

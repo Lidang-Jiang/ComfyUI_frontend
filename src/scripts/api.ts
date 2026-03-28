@@ -864,8 +864,16 @@ export class ComfyApi extends EventTarget {
    */
   async listAllHubWorkflows(): Promise<HubWorkflowSummary[]> {
     const all: HubWorkflowSummary[] = []
+    const seenCursors = new Set<string>()
     let cursor: string | undefined
     do {
+      if (cursor) {
+        if (seenCursors.has(cursor)) {
+          console.error('Hub workflow pagination loop detected')
+          break
+        }
+        seenCursors.add(cursor)
+      }
       const page = await this.fetchHubWorkflowPage(100, cursor)
       all.push(...(page.workflows as HubWorkflowSummary[]))
       cursor = page.next_cursor || undefined

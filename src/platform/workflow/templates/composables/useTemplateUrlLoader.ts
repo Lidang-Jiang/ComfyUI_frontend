@@ -110,22 +110,24 @@ export function useTemplateUrlLoader() {
     try {
       await templateWorkflows.loadTemplates()
 
-      let success = await templateWorkflows.loadWorkflowTemplate(
-        templateParam,
-        sourceParam
-      )
-
-      // On cloud, if name-based lookup fails, try by shareId (hub templates)
-      if (!success && isCloud) {
+      // On cloud, resolve by name or shareId before attempting to load
+      let resolvedName = templateParam
+      let resolvedSource = sourceParam
+      if (isCloud) {
         const store = useWorkflowTemplatesStore()
-        const templateByShareId = store.getTemplateByShareId(templateParam)
-        if (templateByShareId) {
-          success = await templateWorkflows.loadWorkflowTemplate(
-            templateByShareId.name,
-            templateByShareId.sourceModule
-          )
+        const resolved =
+          store.getTemplateByName(templateParam) ??
+          store.getTemplateByShareId(templateParam)
+        if (resolved) {
+          resolvedName = resolved.name
+          resolvedSource = resolved.sourceModule
         }
       }
+
+      const success = await templateWorkflows.loadWorkflowTemplate(
+        resolvedName,
+        resolvedSource
+      )
 
       if (!success) {
         toast.add({
