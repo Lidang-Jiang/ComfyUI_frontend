@@ -10,10 +10,16 @@ const columns = computed(() => [
   {
     title: t('footer.product', locale),
     links: [
-      { label: t('footer.comfyDesktop', locale), href: localePath('/download', locale) },
+      {
+        label: t('footer.comfyDesktop', locale),
+        href: localePath('/download', locale)
+      },
       { label: t('footer.comfyCloud', locale), href: 'https://app.comfy.org' },
       { label: t('footer.comfyHub', locale), href: 'https://hub.comfy.org' },
-      { label: t('footer.pricing', locale), href: localePath('/pricing', locale) }
+      {
+        label: t('footer.pricing', locale),
+        href: localePath('/pricing', locale)
+      }
     ]
   },
   {
@@ -24,7 +30,10 @@ const columns = computed(() => [
         href: 'https://docs.comfy.org'
       },
       { label: t('footer.blog', locale), href: 'https://blog.comfy.org' },
-      { label: t('footer.gallery', locale), href: localePath('/gallery', locale) },
+      {
+        label: t('footer.gallery', locale),
+        href: localePath('/gallery', locale)
+      },
       {
         label: t('footer.github', locale),
         href: 'https://github.com/comfyanonymous/ComfyUI'
@@ -35,26 +44,62 @@ const columns = computed(() => [
     title: t('footer.company', locale),
     links: [
       { label: t('footer.about', locale), href: localePath('/about', locale) },
-      { label: t('footer.careers', locale), href: localePath('/careers', locale) },
-      { label: t('footer.enterprise', locale), href: localePath('/enterprise', locale) }
+      {
+        label: t('footer.careers', locale),
+        href: localePath('/careers', locale)
+      },
+      {
+        label: t('footer.enterprise', locale),
+        href: localePath('/enterprise', locale)
+      }
     ]
   },
   {
     title: t('footer.legal', locale),
     links: [
-      { label: t('footer.terms', locale), href: localePath('/terms-of-service', locale) },
-      { label: t('footer.privacy', locale), href: localePath('/privacy-policy', locale) }
+      {
+        label: t('footer.terms', locale),
+        href: localePath('/terms-of-service', locale)
+      },
+      {
+        label: t('footer.privacy', locale),
+        href: localePath('/privacy-policy', locale)
+      }
     ]
   }
 ])
 
 const socials = [
-  { label: 'GitHub', href: 'https://github.com/comfyanonymous/ComfyUI', icon: '/icons/social/github.svg' },
-  { label: 'Discord', href: 'https://discord.gg/comfyorg', icon: '/icons/social/discord.svg' },
-  { label: 'X', href: 'https://x.com/comaboratory', icon: '/icons/social/x.svg' },
-  { label: 'Reddit', href: 'https://reddit.com/r/comfyui', icon: '/icons/social/reddit.svg' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/company/comfyorg', icon: '/icons/social/linkedin.svg' },
-  { label: 'Instagram', href: 'https://instagram.com/comfyorg', icon: '/icons/social/instagram.svg' }
+  {
+    label: 'GitHub',
+    href: 'https://github.com/comfyanonymous/ComfyUI',
+    icon: '/icons/social/github.svg'
+  },
+  {
+    label: 'Discord',
+    href: 'https://discord.gg/comfyorg',
+    icon: '/icons/social/discord.svg'
+  },
+  {
+    label: 'X',
+    href: 'https://x.com/comaboratory',
+    icon: '/icons/social/x.svg'
+  },
+  {
+    label: 'Reddit',
+    href: 'https://reddit.com/r/comfyui',
+    icon: '/icons/social/reddit.svg'
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/company/comfyorg',
+    icon: '/icons/social/linkedin.svg'
+  },
+  {
+    label: 'Instagram',
+    href: 'https://instagram.com/comfyorg',
+    icon: '/icons/social/instagram.svg'
+  }
 ]
 </script>
 
@@ -66,7 +111,10 @@ const socials = [
       <!-- Brand -->
       <div class="lg:col-span-1">
         <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
-        <a :href="localePath('/', locale)" class="text-2xl font-bold italic text-brand-yellow">
+        <a
+          :href="localePath('/', locale)"
+          class="text-2xl font-bold text-brand-yellow italic"
+        >
           Comfy
         </a>
         <!-- eslint-enable @intlify/vue-i18n/no-raw-text -->
@@ -97,7 +145,7 @@ const socials = [
     <!-- Bottom bar -->
     <div class="border-t border-white/10">
       <div
-        class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row"
+        class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 p-6 sm:flex-row"
       >
         <p class="text-sm text-smoke-700">
           &copy; {{ new Date().getFullYear() }}
@@ -116,7 +164,7 @@ const socials = [
             class="text-smoke-700 transition-colors hover:text-white"
           >
             <span
-              class="inline-block h-5 w-5 bg-current"
+              class="inline-block size-5 bg-current"
               :style="{
                 maskImage: `url(${social.icon})`,
                 maskSize: 'contain',
