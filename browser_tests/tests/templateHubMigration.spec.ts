@@ -22,18 +22,19 @@ test.describe(
       await comfyPage.templates.expectMinimumCardCount(1)
 
       const dialog = comfyPage.page.getByRole('dialog')
-      const searchInput = dialog.getByRole('searchbox')
+      const searchInput = dialog.getByPlaceholder(/search/i)
+      await expect(searchInput).toBeVisible()
 
       const beforeCount = await comfyPage.templates.allTemplateCards.count()
 
       await searchInput.fill('zzz_nonexistent_template_xyz')
-      await comfyPage.page.waitForTimeout(300)
+      await comfyPage.page.waitForTimeout(500)
 
       const afterCount = await comfyPage.templates.allTemplateCards.count()
       expect(afterCount).toBeLessThan(beforeCount)
 
       await searchInput.clear()
-      await comfyPage.page.waitForTimeout(300)
+      await comfyPage.page.waitForTimeout(500)
       await comfyPage.templates.expectMinimumCardCount(1)
     })
 
