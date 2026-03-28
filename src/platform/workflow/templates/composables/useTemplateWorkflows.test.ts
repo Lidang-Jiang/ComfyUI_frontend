@@ -176,6 +176,39 @@ describe('useTemplateWorkflows', () => {
     )
   })
 
+  it('should return absolute thumbnail URL for hub templates', () => {
+    const { getTemplateThumbnailUrl } = useTemplateWorkflows()
+    const template = {
+      name: 'hub-template',
+      mediaSubtype: 'webp',
+      mediaType: 'image',
+      description: 'Hub template',
+      thumbnailUrl: 'https://cdn.example.com/thumb.webp',
+      thumbnailComparisonUrl: 'https://cdn.example.com/compare.webp'
+    }
+
+    expect(getTemplateThumbnailUrl(template, 'hub', '1')).toBe(
+      'https://cdn.example.com/thumb.webp'
+    )
+    expect(getTemplateThumbnailUrl(template, 'hub', '2')).toBe(
+      'https://cdn.example.com/compare.webp'
+    )
+  })
+
+  it('should fall back to static URL when hub template has no thumbnailUrl', () => {
+    const { getTemplateThumbnailUrl } = useTemplateWorkflows()
+    const template = {
+      name: 'fallback-template',
+      mediaSubtype: 'webp',
+      mediaType: 'image',
+      description: 'Template without hub URL'
+    }
+
+    expect(getTemplateThumbnailUrl(template, 'default', '1')).toBe(
+      'mock-file-url/templates/fallback-template-1.webp'
+    )
+  })
+
   it('should format template titles correctly', () => {
     const { getTemplateTitle } = useTemplateWorkflows()
 

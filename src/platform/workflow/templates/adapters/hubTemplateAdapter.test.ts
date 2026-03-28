@@ -77,6 +77,24 @@ describe('adaptHubWorkflowToTemplate', () => {
     expect(result.openSource).toBe(true)
   })
 
+  it('maps video thumbnail type to video mediaType', () => {
+    const summary = makeMinimalSummary({ thumbnail_type: 'video' })
+
+    const result = adaptHubWorkflowToTemplate(summary)
+
+    expect(result.mediaType).toBe('video')
+    expect(result.mediaSubtype).toBe('mp4')
+  })
+
+  it('maps image thumbnail type to image mediaType', () => {
+    const summary = makeMinimalSummary({ thumbnail_type: 'image' })
+
+    const result = adaptHubWorkflowToTemplate(summary)
+
+    expect(result.mediaType).toBe('image')
+    expect(result.mediaSubtype).toBe('webp')
+  })
+
   it('provides sensible defaults for missing fields', () => {
     const summary = makeMinimalSummary()
 
