@@ -12,6 +12,7 @@ const makeMinimalSummary = (
 ): HubWorkflowSummary => ({
   share_id: 'abc123',
   name: 'My Workflow',
+  status: 'approved',
   profile: { username: 'testuser' },
   ...overrides
 })
