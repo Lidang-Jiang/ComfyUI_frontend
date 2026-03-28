@@ -269,8 +269,8 @@ test.describe('Properties panel', () => {
 
     test('should apply color to node', async ({ comfyPage }) => {
       const nodeLocator = comfyPage.vueNodes.getNodeByTitle('KSampler')
-      const initialBg = await nodeLocator.evaluate((el) =>
-        getComputedStyle(el).backgroundColor
+      const initialBg = await nodeLocator.evaluate(
+        (el) => getComputedStyle(el).backgroundColor
       )
 
       await panel.getColorSwatch('red').click()
@@ -288,8 +288,8 @@ test.describe('Properties panel', () => {
       )
 
       await panel.getColorSwatch('noColor').click()
-      const bgAfterRemove = await nodeLocator.evaluate((el) =>
-        getComputedStyle(el).backgroundColor
+      const bgAfterRemove = await nodeLocator.evaluate(
+        (el) => getComputedStyle(el).backgroundColor
       )
       expect(bgAfterRemove).not.toContain('red')
     })
@@ -312,18 +312,14 @@ test.describe('Properties panel', () => {
       await panel.pinnedSwitch.click()
 
       const nodeLocator = comfyPage.vueNodes.getNodeByTitle('KSampler')
-      await expect(
-        nodeLocator.getByTestId('node-pin-indicator')
-      ).toBeVisible()
+      await expect(nodeLocator.getByTestId('node-pin-indicator')).toBeVisible()
     })
 
     test('should unpin previously pinned node', async ({ comfyPage }) => {
       const nodeLocator = comfyPage.vueNodes.getNodeByTitle('KSampler')
 
       await panel.pinnedSwitch.click()
-      await expect(
-        nodeLocator.getByTestId('node-pin-indicator')
-      ).toBeVisible()
+      await expect(nodeLocator.getByTestId('node-pin-indicator')).toBeVisible()
 
       await panel.pinnedSwitch.click()
       await expect(
