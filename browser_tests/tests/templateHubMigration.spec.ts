@@ -91,6 +91,29 @@ test.describe(
       expect(src).toBeTruthy()
     })
 
+    test('local build uses static files, not hub API', async ({
+      comfyPage
+    }) => {
+      const hubRequests: string[] = []
+      await comfyPage.page.route('**/api/hub/workflows*', async (route) => {
+        hubRequests.push(route.request().url())
+        await route.abort()
+      })
+
+      const staticRequestPromise = comfyPage.page.waitForRequest(
+        (req) =>
+          req.url().includes('/templates/index') && req.url().endsWith('.json')
+      )
+
+      await comfyPage.command.executeCommand('Comfy.BrowseTemplates')
+      await expect(comfyPage.templates.content).toBeVisible()
+      await comfyPage.templates.expectMinimumCardCount(1)
+
+      const staticRequest = await staticRequestPromise
+      expect(staticRequest.url()).toContain('/templates/index')
+      expect(hubRequests).toHaveLength(0)
+    })
+
     test('hub API mock: dialog renders hub workflow data', async ({
       comfyPage
     }) => {
